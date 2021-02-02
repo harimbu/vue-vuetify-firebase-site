@@ -1,7 +1,7 @@
 <template>
   <v-toolbar-title class="pl-2">
     {{title}}
-    <v-btn color="success" icon @click="openDialog"><v-icon>mdi-pencil</v-icon></v-btn>
+    <v-btn color="success" icon @click="openDialog"><v-icon v-show="$store.state.user">mdi-pencil</v-icon></v-btn>
 
     <v-dialog v-model="dialog" max-width="500px">
       <v-card>
@@ -27,12 +27,16 @@ export default {
   methods: {
     openDialog () {
       this.dialog = true
+      this.text = this.title
     },
-    save () {
-      this.dialog = false
-      this.$fire.database().ref('site').update({
-        title: this.text
-      })
+    async save () {
+      try {
+        await this.$fire.database().ref('site').update({
+          title: this.text
+        })
+      } finally {
+        this.dialog = false
+      }
     }
   }
 }

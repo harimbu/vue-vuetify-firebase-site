@@ -3,10 +3,17 @@
     <v-navigation-drawer app v-model="drawer" width="360">
       <v-card class="text-center my-10" flat>
         <v-card-text>
-          <v-avatar color="red white--text subtitle-1" size="80">who?</v-avatar>
+          <v-avatar size="80" v-if="$store.state.user">
+            <img :src="$store.state.user.photoURL" />
+          </v-avatar>
+          <v-avatar v-else color="red white--text subtitle-1" size="80">?</v-avatar>
         </v-card-text>
-        <v-card-text>
-          <div class="title">하림부</div>
+        <v-card-text v-if="$store.state.user">
+          <div class="title">{{$store.state.user.displayName}}</div>
+          <div class="caption">{{$store.state.user.email}}</div>
+        </v-card-text>
+        <v-card-text v-else>
+          <div class="title">who</div>
           <div class="caption">firebase 사용하기</div>
         </v-card-text>
       </v-card>
@@ -17,7 +24,7 @@
       <v-app-bar-nav-icon @click="drawer=!drawer" />
       <Title :title="site.title" />
       <v-spacer></v-spacer>
-      <v-btn icon><v-icon>mdi-account</v-icon></v-btn>
+      <Sign />
     </v-app-bar>
 
     <v-main>
@@ -31,9 +38,10 @@
 <script>
 import Title from '@/views/site/Title'
 import Menu from '@/views/site/Menu'
+import Sign from '@/views/site/Sign'
 export default {
   name: 'App',
-  components: { Title, Menu },
+  components: { Title, Menu, Sign },
   data () {
     return {
       drawer: null,

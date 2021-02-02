@@ -11,10 +11,12 @@
         <v-list-item-content>
           <v-list-item-title>
             <span>{{item.title}}</span>
-            <v-icon class="ml-2" @click="openDialog(i)">mdi-pencil</v-icon>
-            <v-icon class="ml-2" @click="removeMenu(i)">mdi-delete</v-icon>
-            <v-icon class="ml-2" @click="moveMenu(items, i, -1)" v-if="i > 0">mdi-chevron-double-up</v-icon>
-            <v-icon class="ml-2" @click="moveMenu(items, i , 1)" v-if="i < items.length-1">mdi-chevron-double-down</v-icon>
+            <span v-show="$store.state.user">
+              <v-icon class="ml-2" @click="openDialog(i)">mdi-pencil</v-icon>
+              <v-icon class="ml-2" @click="removeMenu(i)">mdi-delete</v-icon>
+              <v-icon class="ml-2" @click="moveMenu(items, i, -1)" v-if="i > 0">mdi-chevron-double-up</v-icon>
+              <v-icon class="ml-2" @click="moveMenu(items, i , 1)" v-if="i < items.length-1">mdi-chevron-double-down</v-icon>
+            </span>
           </v-list-item-title>
         </v-list-item-content>
       </template>
@@ -27,15 +29,17 @@
         <v-list-item-content>
           <v-list-item-title>
             <span>{{child.title}}</span>
-            <v-icon class="ml-2" @click="openDialogSub(i, j)">mdi-pencil</v-icon>
-            <v-icon class="ml-2" @click="removeSubMenu(i, j)">mdi-delete</v-icon>
-            <v-icon class="ml-2" @click="moveMenu(item.items, j, -1)" v-if="j > 0">mdi-chevron-double-up</v-icon>
-            <v-icon class="ml-2" @click="moveMenu(item.items, j , 1)" v-if="j < item.items.length-1">mdi-chevron-double-down</v-icon>
+            <span v-show="$store.state.user">
+              <v-icon class="ml-2" @click="openDialogSub(i, j)">mdi-pencil</v-icon>
+              <v-icon class="ml-2" @click="removeSubMenu(i, j)">mdi-delete</v-icon>
+              <v-icon class="ml-2" @click="moveMenu(item.items, j, -1)" v-if="j > 0">mdi-chevron-double-up</v-icon>
+              <v-icon class="ml-2" @click="moveMenu(item.items, j , 1)" v-if="j < item.items.length-1">mdi-chevron-double-down</v-icon>
+            </span>
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item @click="openDialogSub(i, -1)">
+      <v-list-item @click="openDialogSub(i, -1)" v-show="$store.state.user">
         <v-list-item-icon class="mr-1"><v-icon>mdi-plus</v-icon></v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>서브 추가하기</v-list-item-title>
@@ -43,7 +47,7 @@
       </v-list-item>
     </v-list-group>
 
-    <v-list-item @click="openDialog(-1)">
+    <v-list-item @click="openDialog(-1)" v-show="$store.state.user">
       <v-list-item-icon class="mr-1"><v-icon>mdi-plus</v-icon></v-list-item-icon>
       <v-list-item-content>
         <v-list-item-title>메뉴 추가하기</v-list-item-title>
