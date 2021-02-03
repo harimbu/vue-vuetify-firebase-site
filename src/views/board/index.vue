@@ -97,7 +97,7 @@ export default {
 
       let query
       switch (arrow) {
-        case -1: query = ref.endBefore(head(this.docs)).limit(limit)
+        case -1: query = ref.endBefore(head(this.docs)).limitToLast(limit)
           break
         case 1: query = ref.startAfter(last(this.docs)).limit(limit)
           break
