@@ -28,7 +28,7 @@
     </v-app-bar>
 
     <v-main>
-      <v-container>
+      <v-container fluid>
         <router-view></router-view>
       </v-container>
     </v-main>

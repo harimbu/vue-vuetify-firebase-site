@@ -1,5 +1,5 @@
 <template>
-  <v-list>
+  <v-list nav>
     <v-list-group
       v-for="(item, i) in items"
       :key="i"
@@ -13,7 +13,7 @@
             <span>{{item.title}}</span>
             <span v-show="$store.state.user">
               <v-icon class="ml-2" @click="openDialog(i)">mdi-pencil</v-icon>
-              <v-icon class="ml-2" @click="removeMenu(i)">mdi-delete</v-icon>
+              <v-icon class="ml-2" @click="removeMenu(items, i)">mdi-delete</v-icon>
               <v-icon class="ml-2" @click="moveMenu(items, i, -1)" v-if="i > 0">mdi-chevron-double-up</v-icon>
               <v-icon class="ml-2" @click="moveMenu(items, i , 1)" v-if="i < items.length-1">mdi-chevron-double-down</v-icon>
             </span>
@@ -31,7 +31,7 @@
             <span>{{child.title}}</span>
             <span v-show="$store.state.user">
               <v-icon class="ml-2" @click="openDialogSub(i, j)">mdi-pencil</v-icon>
-              <v-icon class="ml-2" @click="removeSubMenu(i, j)">mdi-delete</v-icon>
+              <v-icon class="ml-2" @click="removeMenu(item.items, j)">mdi-delete</v-icon>
               <v-icon class="ml-2" @click="moveMenu(item.items, j, -1)" v-if="j > 0">mdi-chevron-double-up</v-icon>
               <v-icon class="ml-2" @click="moveMenu(item.items, j , 1)" v-if="j < item.items.length-1">mdi-chevron-double-down</v-icon>
             </span>
@@ -155,12 +155,8 @@ export default {
       }
       this.save()
     },
-    removeMenu (i) {
-      this.items.splice(i, 1)
-      this.save()
-    },
-    removeSubMenu (i, j) {
-      this.items[i].items.splice(j, 1)
+    removeMenu (items, i) {
+      items.splice(i, 1)
       this.save()
     },
     moveMenu (items, index, arrow) {
